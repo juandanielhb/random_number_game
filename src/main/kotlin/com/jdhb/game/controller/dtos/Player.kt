@@ -1,11 +1,10 @@
 package com.jdhb.game.controller.dtos
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-data class PlayerDto(
+data class Player(
 
     val id: Long?,
     @field:NotBlank(message = "Name is required.")
