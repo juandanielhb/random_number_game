@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"juan\",   \r\n    \"surname\":\"hernandez\",\r\n    \"username\":\"juandanielhb3\",\r\n    \"walletBalance\": 1000\r\n}",
+							"raw": "{\r\n    \"name\": \"Jhon\",   \r\n    \"surname\":\"Scerri\",\r\n    \"username\":\"JJScerri\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,7 +24,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/player",
+							"raw": "localhost:8080/api/v1/players",
 							"host": [
 								"localhost"
 							],
@@ -32,7 +32,7 @@
 							"path": [
 								"api",
 								"v1",
-								"player"
+								"players"
 							]
 						}
 					},
@@ -56,7 +56,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/player/5/wallet-transactions",
+							"raw": "localhost:8080/api/v1/players/1/wallet-transactions",
 							"host": [
 								"localhost"
 							],
@@ -64,8 +64,8 @@
 							"path": [
 								"api",
 								"v1",
-								"player",
-								"5",
+								"players",
+								"1",
 								"wallet-transactions"
 							],
 							"query": [
@@ -97,7 +97,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/player/5/wallet-transactions",
+							"raw": "localhost:8080/api/v1/players/1/bets",
 							"host": [
 								"localhost"
 							],
@@ -105,9 +105,9 @@
 							"path": [
 								"api",
 								"v1",
-								"player",
-								"5",
-								"wallet-transactions"
+								"players",
+								"1",
+								"bets"
 							],
 							"query": [
 								{
@@ -183,7 +183,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"playBets\": [\r\n        {\r\n            \"id\": 1,\r\n            \"username\": \"Juan\",  \r\n            \"amount\": 10,\r\n            \"selectedNumber\": 10\r\n        },\r\n        {\r\n                        \"id\": 1,\r\n\r\n            \"username\": \"Juan2\",  \r\n            \"amount\": 10,\r\n            \"selectedNumber\": 10\r\n        }\r\n    ]\r\n}",
+							"raw": "[\r\n    {\r\n        \"playerId\": 1,\r\n        \"betAmount\": 10,\r\n        \"selectedNumber\": 7\r\n    },\r\n        {\r\n        \"playerId\": 2,\r\n        \"betAmount\": 10,\r\n        \"selectedNumber\": 1\r\n    },\r\n        {\r\n        \"playerId\": 3,\r\n        \"betAmount\": 10,\r\n        \"selectedNumber\": 3\r\n    }\r\n]\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -191,7 +191,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/game/play?strategy=hola",
+							"raw": "localhost:8080/api/v1/games/standard/play",
 							"host": [
 								"localhost"
 							],
@@ -199,13 +199,15 @@
 							"path": [
 								"api",
 								"v1",
-								"game",
+								"games",
+								"standard",
 								"play"
 							],
 							"query": [
 								{
-									"key": "strategy",
-									"value": "hola"
+									"key": "playMode",
+									"value": "standard",
+									"disabled": true
 								}
 							]
 						}
