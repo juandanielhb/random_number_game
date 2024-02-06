@@ -1,6 +1,6 @@
 package com.jdhb.game.controller
 
-import com.jdhb.game.controller.dtos.Bet
+import com.jdhb.game.controller.dtos.BetDTO
 import com.jdhb.game.entities.enums.TransactionType
 import com.jdhb.game.services.BetService
 import com.jdhb.game.services.GameStrategy
@@ -11,17 +11,19 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/game")
+@RequestMapping("/games")
 @Validated
-class GameController constructor(
-    private val gameStrategies: List<GameStrategy>,
+class GameController (
+    val gameStrategies: List<GameStrategy>,
     private val betService: BetService,
     private val leaderboardService: LeaderboardService,
 ) {
-    @PostMapping("/play")
-    fun playGame(@RequestBody @Valid @NotEmpty bets: List<Bet>, @RequestParam(defaultValue = "standard") playMode: String): List<Bet> {
-        var gameStrategy = gameStrategies.find {
-            gameStrategy -> playMode == gameStrategy.getStrategy()
+    @PostMapping("/{playMode}/play")
+    fun playGame(@RequestBody @Valid @NotEmpty bets: List<BetDTO>,
+                 @PathVariable playMode: String
+    ): List<BetDTO> {
+        val gameStrategy = gameStrategies.find {
+            playMode == it.getStrategy()
         }
         gameStrategy ?: throw IllegalArgumentException("Invalid strategy: $playMode")
 

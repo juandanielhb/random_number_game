@@ -1,13 +1,13 @@
 package com.jdhb.game.services
 
-import com.jdhb.game.controller.dtos.Bet
+import com.jdhb.game.controller.dtos.BetDTO
 
 interface GameStrategy {
 
     val randomRangeStart: Int
     val randomRangeEnd: Int
-    fun validateBets(playerBets: List<Bet>): List<Bet>
-    fun getResults(playerBets: List<Bet>): List<Bet>
+    fun validateBets(bets: List<BetDTO>): List<BetDTO>
+    fun getResults(bets: List<BetDTO>): List<BetDTO>
     fun generatedNumber(): Int
     fun getStrategy(): String
 }

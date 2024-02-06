@@ -1,7 +1,7 @@
 package com.jdhb.game.exceptions
 
-import com.jdhb.game.controller.ErrorResponse
-import com.jdhb.game.controller.ErrorResponseSingleMessage
+import com.jdhb.game.controller.dtos.ErrorResponseDTO
+import com.jdhb.game.controller.dtos.ErrorResponseSingleMessageDTO
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
@@ -16,7 +16,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleValidationExceptions(ex: MethodArgumentNotValidException, request: HttpServletRequest): ErrorResponse {
+    fun handleValidationExceptions(ex: MethodArgumentNotValidException, request: HttpServletRequest): ErrorResponseDTO {
         val errors = mutableMapOf<String, String>()
 
         ex.bindingResult.allErrors.forEach { error ->
@@ -25,7 +25,7 @@ class GlobalExceptionHandler {
             errors[fieldName] = errorMessage
         }
 
-        return ErrorResponse(
+        return ErrorResponseDTO(
             timestamp = LocalDateTime.now(),
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.reasonPhrase,
@@ -36,7 +36,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleConstraintViolationExceptions(ex: ConstraintViolationException, request: HttpServletRequest): ErrorResponse{
+    fun handleConstraintViolationExceptions(ex: ConstraintViolationException, request: HttpServletRequest): ErrorResponseDTO {
         val errors = mutableMapOf<String, String>()
 
         ex.constraintViolations.forEach { violation ->
@@ -45,7 +45,7 @@ class GlobalExceptionHandler {
             errors[fieldName] = errorMessage
         }
 
-        return ErrorResponse(
+        return ErrorResponseDTO(
             timestamp = LocalDateTime.now(),
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.reasonPhrase,
@@ -56,10 +56,10 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleConstraintViolationExceptions(ex: Exception, request: HttpServletRequest): ErrorResponseSingleMessage {
+    fun handleConstraintViolationExceptions(ex: Exception, request: HttpServletRequest): ErrorResponseSingleMessageDTO {
         val errorMessage = ex.message
 
-        return ErrorResponseSingleMessage(
+        return ErrorResponseSingleMessageDTO(
             timestamp = LocalDateTime.now(),
             status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             error = HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase,

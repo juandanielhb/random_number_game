@@ -1,7 +1,6 @@
 package com.jdhb.game.services
 
-import com.jdhb.game.controller.dtos.Bet
-import com.jdhb.game.controller.dtos.Player
+import com.jdhb.game.controller.dtos.PlayerDTO
 import com.jdhb.game.entities.PlayerEntity
 import com.jdhb.game.exceptions.PlayerBalanceInvalidException
 import com.jdhb.game.exceptions.PlayerInvalidException
@@ -9,8 +8,8 @@ import com.jdhb.game.exceptions.ResourceNotFoundException
 import com.jdhb.game.mappers.PlayerMapper
 import com.jdhb.game.repositories.PlayerRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import kotlin.jvm.optionals.getOrElse
 
 private val logger = KotlinLogging.logger {}
@@ -19,9 +18,13 @@ class PlayerService(
     private val playerRepository: PlayerRepository,
     private val playerMapper: PlayerMapper,
 ) {
-    fun register(player: Player): Player {
-        logger.info { "Player to save $player" }
-        return playerMapper.toDto(playerRepository.save(playerMapper.toEntity(player)));
+    fun register(playerDTO: PlayerDTO): PlayerDTO {
+        try {
+            logger.info { "Player to save $playerDTO" }
+            return playerMapper.toDto(playerRepository.save(playerMapper.toEntity(playerDTO)));
+        } catch (ex: DataIntegrityViolationException){
+            throw PlayerInvalidException("Player username is already registered")
+        }
     }
 
     fun getPlayer(id: Long): PlayerEntity = playerRepository.findById(id).getOrElse {
@@ -35,7 +38,7 @@ class PlayerService(
         } catch (ex: ResourceNotFoundException) {
             throw PlayerInvalidException("Player was not found")
         }
-        return getPlayer(playerId)
+        return player
     }
 
     fun validatePlayerBalance(player: PlayerEntity, amount: Double) {
@@ -45,10 +48,4 @@ class PlayerService(
             throw PlayerBalanceInvalidException("Insufficient funds for player ${player.id}")
         }
     }
-
-    @Transactional
-    fun updatePlayersBalance(bets: List<Bet>): List<PlayerEntity> {
-        TODO("Not yet implemented")
-    }
-
 }

@@ -1,7 +1,6 @@
 package com.jdhb.game.services
 
-import com.jdhb.game.controller.dtos.Bet
-import com.jdhb.game.entities.BetEntity
+import com.jdhb.game.controller.dtos.BetDTO
 import com.jdhb.game.entities.enums.GameStrategies
 import com.jdhb.game.services.handlers.StandardBetHandlerChain
 import org.springframework.stereotype.Service
@@ -14,7 +13,7 @@ class StandardGameStrategy(
     override val randomRangeStart: Int = 1
     override val randomRangeEnd: Int = 10
 
-    override fun validateBets(bets: List<Bet>): List<Bet>{
+    override fun validateBets(bets: List<BetDTO>): List<BetDTO>{
         betService.checkSingleBetPerPlayer(bets)
         bets.forEach {
             betService.validateBet(it, randomRangeStart, randomRangeEnd)
@@ -22,7 +21,7 @@ class StandardGameStrategy(
         return bets
     }
 
-    override fun getResults(bets: List<Bet>): List<Bet> {
+    override fun getResults(bets: List<BetDTO>): List<BetDTO> {
         val generatedNumber = generatedNumber()
         bets.forEach {
             it.generatedNumber = generatedNumber

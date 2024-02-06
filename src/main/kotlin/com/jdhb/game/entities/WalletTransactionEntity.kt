@@ -11,7 +11,8 @@ data class WalletTransactionEntity(
     var id: Long? = null,
 
     @Column(nullable = false)
-    val transactionType: String = TransactionType.BET.name,
+    @Enumerated(EnumType.STRING)
+    val transactionType: TransactionType = TransactionType.BET,
 
     @Column(nullable = false)
     val amount: Double,
@@ -25,4 +26,4 @@ data class WalletTransactionEntity(
     @JoinColumn(name = "player_id", nullable = false)
     var player: PlayerEntity,
 
-    )
+)

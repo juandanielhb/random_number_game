@@ -16,14 +16,15 @@ data class BetEntity(
     var player: PlayerEntity,
 
     @Column(name = "bet_amount")
-    val betAmount: Int,
+    val betAmount: Double,
 
     @Column(name = "selected_number")
-    val selectedNumber: Int,
+    val selectedNumber: Int = 0,
 
+    @Enumerated(EnumType.STRING)
     val result: BetResults?,
 
-    val multiplier: Double?,
+    val multiplier: Double? = 0.0,
 
     var generatedNumber: Int,
 

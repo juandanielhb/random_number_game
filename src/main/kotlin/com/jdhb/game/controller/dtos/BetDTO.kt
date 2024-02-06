@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class Bet(
+data class BetDTO(
 
     @field:NotNull(message = "playerId cannot be null")
     val playerId: Long,
@@ -21,11 +21,11 @@ data class Bet(
     @field:NotNull(message = "selectedNumber cannot be null")
     val selectedNumber: Int,
 
-    var generatedNumber: Int,
+    var generatedNumber: Int = 0,
 
     var result: BetResults = BetResults.LOSE,
 
-    var multiplier: Double,
+    var multiplier: Double = 0.0,
 
     var winnings: Double = 0.0,
 
@@ -33,8 +33,3 @@ data class Bet(
     val timestamp: LocalDateTime = LocalDateTime.now(),
 )
 
-fun Bet.updateResult(multiplier: Double, result: BetResults, winnings: Double) = this.apply {
-    this.multiplier = multiplier
-    this.result = result
-    this.winnings = winnings
-}

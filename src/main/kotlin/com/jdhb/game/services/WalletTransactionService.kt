@@ -1,30 +1,37 @@
 package com.jdhb.game.services
 
-import com.jdhb.game.controller.dtos.Bet
-import com.jdhb.game.controller.dtos.Player
+import com.jdhb.game.controller.dtos.BetDTO
+import com.jdhb.game.controller.dtos.WalletTransactionDTO
 import com.jdhb.game.entities.PlayerEntity
 import com.jdhb.game.entities.WalletTransactionEntity
 import com.jdhb.game.entities.enums.BetResults
 import com.jdhb.game.entities.enums.TransactionType
+import com.jdhb.game.mappers.WalletTransactionMapper
 import com.jdhb.game.repositories.WalletTransactionRepository
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class WalletTransactionService(private val walletTransactionRepository: WalletTransactionRepository) {
-    fun getAllTransactionsByUser(userId: Long, pageable: Pageable): Page<WalletTransactionEntity> {
-        return walletTransactionRepository.findByPlayerId(userId, pageable)
+class WalletTransactionService(
+    private val walletTransactionRepository: WalletTransactionRepository,
+    private val walletTransactionMapper: WalletTransactionMapper,
+) {
+    fun getAllTransactionsByUser(playerId: Long, pageable: Pageable): List<WalletTransactionDTO> {
+        return walletTransactionMapper.toDto(
+            walletTransactionRepository.findByPlayerId(playerId, pageable).content
+        )
     }
 
     fun getTransactionsByUserAndDateRange(
-        userId: Long,
+        playerId: Long,
         startDate: LocalDate,
         endDate: LocalDate,
         pageable: Pageable
-    ): Page<WalletTransactionEntity> {
-        return walletTransactionRepository.findByPlayerIdAndTimestampBetween(userId, startDate, endDate, pageable)
+    ): List<WalletTransactionDTO> {
+        return walletTransactionMapper.toDto(
+            walletTransactionRepository.findByPlayerIdAndTimestampBetween(playerId, startDate, endDate, pageable).content
+        )
     }
 
     fun save(walletTransactionEntity: WalletTransactionEntity): WalletTransactionEntity? {
@@ -35,21 +42,21 @@ class WalletTransactionService(private val walletTransactionRepository: WalletTr
         return walletTransactionRepository.saveAll(transactions)
     }
 
-    fun processBetTransaction(player: PlayerEntity, bet: Bet): WalletTransactionEntity {
+    fun processBetTransaction(player: PlayerEntity, bet: BetDTO): WalletTransactionEntity {
         player.wallet.balance -= bet.betAmount
         return WalletTransactionEntity(
-            transactionType = TransactionType.BET.name,
+            transactionType = TransactionType.BET,
             amount = -bet.betAmount,
             player = player,
             walletBalance = player.wallet.balance
         )
     }
 
-    fun processWinTransaction(player: PlayerEntity, bet: Bet): WalletTransactionEntity? {
+    fun processWinTransaction(player: PlayerEntity, bet: BetDTO): WalletTransactionEntity? {
         if (bet.result == BetResults.WIN) {
             player.wallet.balance += bet.winnings
             return WalletTransactionEntity(
-                transactionType = TransactionType.WIN.name,
+                transactionType = TransactionType.WIN,
                 amount = bet.winnings,
                 player = player,
                 walletBalance = player.wallet.balance

@@ -11,7 +11,7 @@ interface WalletTransactionRepository : JpaRepository<WalletTransactionEntity, L
     fun findByPlayerId(playerId: Long, pageable: Pageable): Page<WalletTransactionEntity>
 
     fun findByPlayerIdAndTimestampBetween(
-        userId: Long,
+        playerId: Long,
         startDate: LocalDate,
         endDate: LocalDate,
         pageable: Pageable

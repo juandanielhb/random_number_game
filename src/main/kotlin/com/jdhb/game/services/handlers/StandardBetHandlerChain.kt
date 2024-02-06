@@ -1,6 +1,6 @@
 package com.jdhb.game.services.handlers
 
-import com.jdhb.game.controller.dtos.Bet
+import com.jdhb.game.controller.dtos.BetDTO
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,7 +15,7 @@ class StandardBetHandlerChain(
         oneNumberOffHandler.setNextHandler(twoNumbersOffHandler)
     }
 
-    override fun handleBet(bet: Bet): Bet? {
+    override fun handleBet(bet: BetDTO): BetDTO? {
         return exactMatchHandler.handleBet(bet)
     }
 }

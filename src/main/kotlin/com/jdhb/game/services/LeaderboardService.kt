@@ -3,7 +3,6 @@ package com.jdhb.game.services
 import com.jdhb.game.entities.BetEntity
 import com.jdhb.game.entities.LeaderboardEntity
 import com.jdhb.game.entities.LeaderboardId
-import com.jdhb.game.entities.WalletTransactionEntity
 import com.jdhb.game.entities.enums.BetResults
 import com.jdhb.game.repositories.LeaderboardRepository
 import org.springframework.data.domain.Page

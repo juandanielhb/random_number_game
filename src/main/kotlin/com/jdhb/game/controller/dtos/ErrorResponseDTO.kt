@@ -1,8 +1,8 @@
-package com.jdhb.game.controller
+package com.jdhb.game.controller.dtos
 
 import java.time.LocalDateTime
 
-data class ErrorResponse(
+data class ErrorResponseDTO(
     val timestamp: LocalDateTime,
     val status: Int,
     val error: String,

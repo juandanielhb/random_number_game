@@ -3,9 +3,8 @@ package com.jdhb.game.controller.dtos
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-data class Player(
 
+data class PlayerDTO(
     val id: Long?,
     @field:NotBlank(message = "Name is required.")
     val name: String,

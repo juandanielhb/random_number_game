@@ -1,15 +1,15 @@
 package com.jdhb.game.services
 
-import com.jdhb.game.controller.dtos.Bet
+import com.jdhb.game.controller.dtos.BetDTO
 import com.jdhb.game.entities.BetEntity
 import com.jdhb.game.entities.PlayerEntity
 import com.jdhb.game.entities.WalletTransactionEntity
-import com.jdhb.game.entities.enums.BetResults
 import com.jdhb.game.entities.enums.TransactionType
 import com.jdhb.game.exceptions.*
 import com.jdhb.game.mappers.BetMapper
 import com.jdhb.game.repositories.BetRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -22,7 +22,13 @@ class BetService(
     private val playerService: PlayerService,
     private val walletTransactionService: WalletTransactionService,
 ) {
-    fun validateBet(bet: Bet, rangeStart: Int, rangeEnd: Int) {
+    fun getBetsByPlayerId(playerId: Long, pageable: Pageable): List<BetDTO> {
+        return betMapper.toDto(
+            betRepository.findByPlayerId(playerId, pageable).content
+        )
+    }
+
+    fun validateBet(bet: BetDTO, rangeStart: Int, rangeEnd: Int) {
         val player: PlayerEntity
         try {
             player = playerService.validatePlayer(bet.playerId)
@@ -39,7 +45,7 @@ class BetService(
     }
 
     @Transactional
-    fun processBets(bets: List<Bet>, transactionType: TransactionType) {
+    fun processBets(bets: List<BetDTO>, transactionType: TransactionType) {
         val transactions = mutableListOf<WalletTransactionEntity>()
 
         bets.forEach { bet ->
@@ -63,12 +69,12 @@ class BetService(
         walletTransactionService.saveAll(transactions)
     }
 
-    private fun validateBetSelectedNumber(selectedNumber: Int, rangeStart: Int, rangeEnd: Int) {
+    fun validateBetSelectedNumber(selectedNumber: Int, rangeStart: Int, rangeEnd: Int) {
         if (selectedNumber !in rangeStart..rangeEnd)
             throw BetSelectedNumberInvalidException("Number should be between $rangeStart and $rangeEnd")
     }
 
-    fun checkSingleBetPerPlayer(bets: List<Bet>){
+    fun checkSingleBetPerPlayer(bets: List<BetDTO>){
         val playerSet = bets.map { it.playerId }.toSet()
 
         if (bets.size != playerSet.size) {
@@ -76,7 +82,7 @@ class BetService(
         }
     }
 
-    fun saveBets(bets: List<Bet>): MutableList<BetEntity> {
+    fun saveBets(bets: List<BetDTO>): MutableList<BetEntity> {
         return betRepository.saveAll(betMapper.toEntity(bets))
     }
 }
