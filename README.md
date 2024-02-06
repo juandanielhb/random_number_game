@@ -24,26 +24,6 @@ Random Number Game is a simple odds-based game implemented in Kotlin with Spring
 - Kotlin compiler
 - Maven build tool
 
-### Building and Running the Application
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/random_number_game.git
-   cd random_number_game
-
-2. Build the project:
-
-   ```bash
-   mvn clean install
-
-3. Run the application:
-
-   ```bash
-   java -jar target/random_number_game-1.0-SNAPSHOT.jar
-
-The application will be accessible at http://localhost:8080.
-
 ### API Endpoints
 - POST /players/register: Register a new player.
 - GET /players/{playerId}/wallet-transactions: - Get wallet transactions by player.
