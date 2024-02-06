@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "dcde44c5-9ca5-43d6-8f3e-c6d7d10f917a",
+		"name": "Random number game API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7073450"
+	},
+	"item": [
+		{
+			"name": "players",
+			"item": [
+				{
+					"name": "Register player",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"juan\",   \r\n    \"surname\":\"hernandez\",\r\n    \"username\":\"juandanielhb3\",\r\n    \"walletBalance\": 1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/player",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List wallet transactions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/player/5/wallet-transactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"5",
+								"wallet-transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve player's bets",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/player/5/wallet-transactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"player",
+								"5",
+								"wallet-transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "leaderboards",
+			"item": [
+				{
+					"name": "Leaderboard",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/leaderboards?playMode=standard&size=2&page=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"leaderboards"
+							],
+							"query": [
+								{
+									"key": "playMode",
+									"value": "standard"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "games",
+			"item": [
+				{
+					"name": "Play",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"playBets\": [\r\n        {\r\n            \"id\": 1,\r\n            \"username\": \"Juan\",  \r\n            \"amount\": 10,\r\n            \"selectedNumber\": 10\r\n        },\r\n        {\r\n                        \"id\": 1,\r\n\r\n            \"username\": \"Juan2\",  \r\n            \"amount\": 10,\r\n            \"selectedNumber\": 10\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/game/play?strategy=hola",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"game",
+								"play"
+							],
+							"query": [
+								{
+									"key": "strategy",
+									"value": "hola"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
