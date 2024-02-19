@@ -23,12 +23,12 @@ class LeaderboardController(
         val pageable = PageRequest.of(page, size)
 
         val leaderboardEntities = if ("all" == playMode) {
-            leaderboardService.getLeaderboardByPlayMode(playMode, pageable)
+            leaderboardService.getLeaderboard(pageable)
         } else {
             leaderboardService.getLeaderboardByPlayMode(playMode, pageable)
         }
 
-        var leaderboardItems = mutableListOf<LeaderboardItemDTO>()
+        val leaderboardItems = mutableListOf<LeaderboardItemDTO>()
 
         leaderboardEntities.content.forEachIndexed { index, leaderboardEntity ->
             leaderboardItems.add(LeaderboardItemDTO(

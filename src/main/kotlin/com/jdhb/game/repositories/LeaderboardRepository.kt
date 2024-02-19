@@ -13,5 +13,6 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 interface LeaderboardRepository : JpaRepository<LeaderboardEntity, LeaderboardId> {
     fun findAllByIdPlayModeOrderByTotalWinningsDesc(playMode: String, pageable: Pageable): Page<LeaderboardEntity>
+    fun findAllByOrderByTotalWinningsDesc(pageable: Pageable): Page<LeaderboardEntity>
 
 }

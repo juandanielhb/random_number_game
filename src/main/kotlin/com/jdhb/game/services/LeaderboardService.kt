@@ -18,7 +18,7 @@ class LeaderboardService(
     }
 
     fun getLeaderboard(pageable: Pageable): Page<LeaderboardEntity> {
-        return leaderboardRepository.findAll(pageable)
+        return leaderboardRepository.findAllByOrderByTotalWinningsDesc(pageable)
     }
 
     fun updateLeaderboardWithBets(betsResult: MutableList<BetEntity>, playMode: String) {

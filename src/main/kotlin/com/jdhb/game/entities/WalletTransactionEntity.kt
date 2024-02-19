@@ -12,7 +12,7 @@ data class WalletTransactionEntity(
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    val transactionType: TransactionType = TransactionType.BET,
+    var transactionType: TransactionType = TransactionType.BET,
 
     @Column(nullable = false)
     val amount: Double,
